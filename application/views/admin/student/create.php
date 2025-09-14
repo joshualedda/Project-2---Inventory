@@ -55,9 +55,9 @@
 
             <!-- Student Number -->
             <div class="col-md-4">
-              <label for="student_number" class="form-label">Student ID</label>
-              <input type="text" class="form-control" name="student_number" value="<?= set_value('student_number') ?>">
-              <?= form_error('student_number', '<div class="error text-danger">', '</div>') ?>
+              <label for="student_id" class="form-label">Student ID</label>
+              <input type="text" class="form-control" name="student_id" value="<?= set_value('student_id') ?>">
+              <?= form_error('student_id', '<div class="error text-danger">', '</div>') ?>
             </div>
 
             <!-- Date of Birth -->
