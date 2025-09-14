@@ -5,8 +5,8 @@ class Student extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Student_model');
-        $this->load->library(['form_validation','session']);
-        $this->load->helper(['url','form']);
+        $this->load->library(['form_validation', 'session']);
+        $this->load->helper(['url', 'form']);
     }
     private function redirectIfUnauthorized()
     {
@@ -30,10 +30,12 @@ class Student extends CI_Controller
         $this->redirectIfUnauthorized();
         $this->prepareUserData();
 
+           $data['students'] = $this->Student_model->get_all_students();
+
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
         $this->load->view('partials/navbar');
-        $this->load->view('admin/student/index');
+        $this->load->view('admin/student/index', $data);
         $this->load->view('partials/footer');
     }
 
@@ -54,7 +56,7 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
         $this->form_validation->set_rules('middle_name', 'Middle Name', 'trim');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
-        $this->form_validation->set_rules('student_number', 'Student ID', 'required|trim');
+        $this->form_validation->set_rules('student_id', 'Student ID', 'required|trim');
         $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'required');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
         $this->form_validation->set_rules('course', 'Course', 'required');
@@ -65,7 +67,6 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('office', 'Office', 'required');
         $this->form_validation->set_rules('guardian_name', 'Guardian Name', 'required|trim');
         $this->form_validation->set_rules('guardian_contact', 'Guardian Contact', 'required|trim');
-        $this->form_validation->set_rules('status', 'Status', 'required');
         $this->form_validation->set_rules('admission_date', 'Date of Admission', 'required');
 
         if ($this->form_validation->run() === FALSE) {
@@ -73,26 +74,8 @@ class Student extends CI_Controller
             return;
         }
 
-        $studentData = array(
-            'first_name' => $this->input->post('first_name', true),
-            'middle_name' => $this->input->post('middle_name', true),
-            'last_name' => $this->input->post('last_name', true),
-            'student_number' => $this->input->post('student_number', true),
-            'date_of_birth' => $this->input->post('date_of_birth', true),
-            'gender' => $this->input->post('gender', true),
-            'course' => $this->input->post('course', true),
-            'year_level' => $this->input->post('year_level', true),
-            'section' => $this->input->post('section', true),
-            'school_year' => $this->input->post('school_year', true),
-            'scholarship_type' => $this->input->post('scholarship_type', true),
-            'office' => $this->input->post('office', true),
-            'guardian_name' => $this->input->post('guardian_name', true),
-            'guardian_contact' => $this->input->post('guardian_contact', true),
-            'status' => $this->input->post('status', true),
-            'admission_date' => $this->input->post('admission_date', true),
-        );
-
-        $inserted = $this->Student_model->insert_student($studentData);
+        // Pass everything at once
+        $inserted = $this->Student_model->insert_student($this->input->post(NULL, true));
 
         if ($inserted) {
             $this->session->set_flashdata('success', 'Student added successfully.');
@@ -102,6 +85,7 @@ class Student extends CI_Controller
 
         redirect($_SERVER['HTTP_REFERER']);
     }
+
 
     // Edit
     public function edit()

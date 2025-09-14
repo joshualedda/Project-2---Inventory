@@ -12,6 +12,8 @@ $route['about'] = 'Welcome/about';
 //Students
 $route['admin/students'] = 'Student';
 $route['admin/student/create'] = 'Student/create';
+$route['admin/student/store'] = 'Student/store';
+
 $route['admin/student/edit'] = 'Student/edit';
 $route['admin/student/view'] = 'Student/view';
 
@@ -24,9 +26,6 @@ $route['admin/scholar/view'] = 'Files/view';
 $route['admin/Guidance'] = 'Guidances';
 $route['admin/Guidance/create'] = 'Guidances/create';
 $route['admin/scholar/view'] = 'Files/view';
-
-
-
 
 
 

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Student_model extends CI_Model
 {
@@ -11,8 +11,13 @@ class Student_model extends CI_Model
      */
     public function insert_student(array $studentData)
     {
-        $studentData['created_at'] = isset($studentData['created_at']) ? $studentData['created_at'] : date('Y-m-d H:i:s');
         return $this->db->insert('students', $studentData);
+    }
+    
+        public function get_all_students()
+    {
+        $query = $this->db->get('students');
+        return $query->result();
     }
 }
 

@@ -89,70 +89,41 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Row 1 -->
-                                    <tr>
-                                        <td>Juan</td>
-                                        <td>Dela Cruz</td>
-                                        <td><span class="badge bg-primary">BSIT</span></td>
-                                        <td>1st Year</td>
-                                        <td>2025-09-01</td>
-                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-printer"></i> Print
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Row 2 -->
-                                    <tr>
-                                        <td>Maria</td>
-                                        <td>Santos</td>
-                                        <td><span class="badge bg-info">BSED</span></td>
-                                        <td>2nd Year</td>
-                                        <td>2025-08-20</td>
-                                        <td><span class="badge rounded-pill bg-danger">Inactive</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-printer"></i> Print
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Row 3 -->
-                                    <tr>
-                                        <td>Carlos</td>
-                                        <td>Reyes</td>
-                                        <td><span class="badge bg-warning text-dark">BSBA</span></td>
-                                        <td>3rd Year</td>
-                                        <td>2025-07-15</td>
-                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-printer"></i> Print
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Row 4 -->
-                                    <tr>
-                                        <td>Ana</td>
-                                        <td>Lopez</td>
-                                        <td><span class="badge bg-danger">BSN</span></td>
-                                        <td>4th Year</td>
-                                        <td>2025-06-05</td>
-                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-printer"></i> Print
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                        </td>
-                                    </tr>
+                                    <?php if (!empty($students)): ?>
+                                        <?php foreach ($students as $student): ?>
+                                            <tr>
+                                                <td><?= $student->first_name ?></td>
+                                                <td><?= $student->last_name ?></td>
+                                                <td>
+                                                    <span class="badge bg-primary"><?= $student->course ?></span>
+                                                </td>
+                                                <td><?= $student->year_level ?></td>
+                                                <td><?= $student->admission_date ?></td>
+                                                <td>
+                                                    <?php if ($student->status == 'Active'): ?>
+                                                        <span class="badge rounded-pill bg-success">Active</span>
+                                                    <?php else: ?>
+                                                        <span class="badge rounded-pill bg-danger">Inactive</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= base_url('admin/student/print/' . $student->id) ?>"
+                                                        class="btn btn-sm btn-secondary">
+                                                        <i class="bi bi-printer"></i> Print
+                                                    </a>
+                                                    <a href="<?= base_url('admin/student/view/' . $student->id) ?>"
+                                                        class="btn btn-sm btn-success">View</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="7" class="text-center">No students found.</td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </tbody>
+
+
                             </table>
                         </div>
 
@@ -166,30 +137,30 @@
 </div>
 <!-- DataTables Script with Filters -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var table = $('#datatable').DataTable();
 
         // Course filter
-        $('#courseFilter').on('change', function() {
+        $('#courseFilter').on('change', function () {
             var course = $(this).val();
             table.column(2).search(course).draw(); // Course column index = 2
         });
 
         // Year Level filter
-        $('#yearFilter').on('change', function() {
+        $('#yearFilter').on('change', function () {
             var year = $(this).val();
             table.column(3).search(year).draw(); // Year Level column index = 3
         });
 
         // Status filter
-        $('#statusFilter').on('change', function() {
+        $('#statusFilter').on('change', function () {
             var status = $(this).val();
             table.column(5).search(status).draw(); // Status column index = 5
         });
 
         // Custom date range filter (Date Enrolled)
         $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
+            function (settings, data, dataIndex) {
                 var min = $('#minDate').val();
                 var max = $('#maxDate').val();
                 var date = data[4]; // Date Enrolled column index = 4
@@ -213,7 +184,7 @@
             }
         );
 
-        $('#minDate, #maxDate').on('change', function() {
+        $('#minDate, #maxDate').on('change', function () {
             table.draw();
         });
     });

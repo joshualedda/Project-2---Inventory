@@ -17,10 +17,10 @@
       <a href="<?= base_url('admin/students') ?>" class="btn btn-success">Back</a>
     </div>
 
-    <?php if ($this->session->flashdata('error')) : ?>
+    <?php if ($this->session->flashdata('error')): ?>
       <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
     <?php endif; ?>
-    <?php if ($this->session->flashdata('success')) : ?>
+    <?php if ($this->session->flashdata('success')): ?>
       <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
     <?php endif; ?>
 
@@ -29,7 +29,7 @@
         Upload New Student
       </h3>
       <div class="card-body">
-        <form action="<?= base_url('student/store') ?>" method="POST">
+        <form action="<?= base_url('admin/student/store') ?>" method="POST">
           <div class="row g-3">
 
             <!-- First Name -->
@@ -74,7 +74,6 @@
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Other">Other</option>
               </select>
               <?= form_error('gender', '<div class="error text-danger">', '</div>') ?>
             </div>
@@ -84,9 +83,9 @@
               <label for="course" class="form-label">Course</label>
               <select name="course" class="form-select">
                 <option value="">Select Course</option>
-                <option value="BSIT">BSIT</option>
-                <option value="BSBA">BSBA</option>
-                <option value="BSED">BSED</option>
+                <option value="1">BSIT</option>
+                <option value="2">BSBA</option>
+                <option value="3">BSED</option>
               </select>
               <?= form_error('course', '<div class="error text-danger">', '</div>') ?>
             </div>
@@ -107,14 +106,15 @@
             <!-- Section -->
             <div class="col-md-4">
               <label for="section" class="form-label">Section</label>
-              <input type="text" class="form-control" name="section" value="<?= set_value('section') ?>" placeholder="e.g. BSIT-1A">
+              <input type="text" class="form-control" name="section" value="<?= set_value('section') ?>">
               <?= form_error('section', '<div class="error text-danger">', '</div>') ?>
             </div>
 
             <!-- School Year -->
             <div class="col-md-4">
               <label for="school_year" class="form-label">School Year</label>
-              <input type="text" class="form-control" name="school_year" value="<?= set_value('school_year') ?>" placeholder="e.g. 2024-2025">
+              <input type="text" class="form-control" name="school_year" value="<?= set_value('school_year') ?>"
+                placeholder="e.g. 2024-2025">
               <?= form_error('school_year', '<div class="error text-danger">', '</div>') ?>
             </div>
 
@@ -123,9 +123,9 @@
               <label for="scholarship_type" class="form-label">Scholarship Type</label>
               <select name="scholarship_type" class="form-select">
                 <option value="">None</option>
-                <option value="Academic">Academic</option>
-                <option value="Athletic">Athletic</option>
-                <option value="Financial Aid">Financial Aid</option>
+                <option value="1">Academic</option>
+                <option value="2">Athletic</option>
+                <option value="3">Financial Aid</option>
               </select>
               <?= form_error('scholarship_type', '<div class="error text-danger">', '</div>') ?>
             </div>
@@ -135,9 +135,9 @@
               <label for="office" class="form-label">Office Belong</label>
               <select name="office" class="form-select">
                 <option value="">Select Office</option>
-                <option value="Registrar">Registrar</option>
-                <option value="Guidance">Guidance</option>
-                <option value="Library">Library</option>
+                <option value="1">Registrar</option>
+                <option value="2">Guidance</option>
+                <option value="3">Library</option>
               </select>
               <?= form_error('office', '<div class="error text-danger">', '</div>') ?>
             </div>
@@ -152,20 +152,11 @@
             <!-- Guardian Contact -->
             <div class="col-md-4">
               <label for="guardian_contact" class="form-label">Guardian Contact</label>
-              <input type="text" class="form-control" name="guardian_contact" value="<?= set_value('guardian_contact') ?>" placeholder="09XXXXXXXXX">
+              <input type="text" class="form-control" name="guardian_contact"
+                value="<?= set_value('guardian_contact') ?>" placeholder="09XXXXXXXXX">
               <?= form_error('guardian_contact', '<div class="error text-danger">', '</div>') ?>
             </div>
 
-            <!-- Status -->
-            <div class="col-md-4">
-              <label for="status" class="form-label">Status</label>
-              <select name="status" class="form-select">
-                <option value="">Select Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-              <?= form_error('status', '<div class="error text-danger">', '</div>') ?>
-            </div>
 
             <!-- Date of Admission -->
             <div class="col-md-4">
