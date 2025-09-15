@@ -1,13 +1,7 @@
 <?php
 class Student extends CI_Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('Student_model');
-        $this->load->library(['form_validation', 'session']);
-        $this->load->helper(['url', 'form']);
-    }
+ 
     private function redirectIfUnauthorized()
     {
         if (!$this->session->userdata('logged_in')) {
@@ -30,7 +24,7 @@ class Student extends CI_Controller
         $this->redirectIfUnauthorized();
         $this->prepareUserData();
 
-           $data['students'] = $this->Student_model->get_all_students();
+           $data['students'] = $this->StudentModel->get_all_students();
 
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
@@ -75,7 +69,7 @@ class Student extends CI_Controller
         }
 
         // Pass everything at once
-        $inserted = $this->Student_model->insert_student($this->input->post(NULL, true));
+        $inserted = $this->StudentModel->insert_student($this->input->post(NULL, true));
 
         if ($inserted) {
             $this->session->set_flashdata('success', 'Student added successfully.');
@@ -88,28 +82,42 @@ class Student extends CI_Controller
 
 
     // Edit
-    public function edit()
+    public function edit($id)
     {
         $this->redirectIfUnauthorized();
         $this->prepareUserData();
-        // if (empty($data['student'])) {
-        //     show_404();
-        // }
+
+        $data['student'] = $this->StudentModel->get_student_by_id($id);
+        
+        if (empty($data['student'])) {
+            show_404();
+        }
 
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
         $this->load->view('partials/navbar');
-        $this->load->view('admin/student/edit');
+        $this->load->view('admin/student/edit', $data);
         $this->load->view('partials/footer');
     }
 
     //Update
     public function update($id)
     {
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-        $this->form_validation->set_rules('department_id', 'Research Department', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required');
+        $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
+        $this->form_validation->set_rules('middle_name', 'Middle Name', 'trim');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
+        $this->form_validation->set_rules('student_id', 'Student ID', 'required|trim');
+        $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'required');
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('course', 'Course', 'required');
+        $this->form_validation->set_rules('year_level', 'Year Level', 'required');
+        $this->form_validation->set_rules('section', 'Section', 'required');
+        $this->form_validation->set_rules('school_year', 'School Year', 'required');
+        $this->form_validation->set_rules('scholarship_type', 'Scholarship Type', 'trim');
+        $this->form_validation->set_rules('office', 'Office', 'required');
+        $this->form_validation->set_rules('guardian_name', 'Guardian Name', 'required|trim');
+        $this->form_validation->set_rules('guardian_contact', 'Guardian Contact', 'required|trim');
+        $this->form_validation->set_rules('admission_date', 'Date of Admission', 'required');
 
         // Check if form validation passes
         if ($this->form_validation->run() === FALSE) {
@@ -118,22 +126,34 @@ class Student extends CI_Controller
             // Prepare data for updating the student
             $data = array(
                 'first_name' => $this->input->post('first_name'),
+                'middle_name' => $this->input->post('middle_name'),
                 'last_name' => $this->input->post('last_name'),
-                'department_id' => $this->input->post('department_id'),
-                'status' => $this->input->post('status'),
+                'student_id' => $this->input->post('student_id'),
+                'date_of_birth' => $this->input->post('date_of_birth'),
+                'gender' => $this->input->post('gender'),
+                'course' => $this->input->post('course'),
+                'year_level' => $this->input->post('year_level'),
+                'section' => $this->input->post('section'),
+                'school_year' => $this->input->post('school_year'),
+                'scholarship_type' => $this->input->post('scholarship_type'),
+                'office' => $this->input->post('office'),
+                'guardian_name' => $this->input->post('guardian_name'),
+                'guardian_contact' => $this->input->post('guardian_contact'),
+                'admission_date' => $this->input->post('admission_date'),
             );
 
             // Update the student data in the database
-            $updateResult = $this->Author->updateAuthor($id, $data);
+            $updateResult = $this->StudentModel->update_student($id, $data);
 
             // Check if the update was successful
             if ($updateResult) {
-                $this->session->set_flashdata('success', 'Author updated successfully.');
+                $this->session->set_flashdata('success', 'Student updated successfully.');
             } else {
                 $this->session->set_flashdata('error', 'Something went wrong. Please try again.');
             }
 
             redirect($_SERVER['HTTP_REFERER']);
+
         }
     }
 

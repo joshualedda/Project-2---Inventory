@@ -13,7 +13,7 @@
     </div>
 
     <div class="d-flex justify-content-end my-2">
-        <a href="<?= base_url('files/create') ?>" class="btn btn-success">
+        <a href="<?= base_url('admin/scholarship/create') ?>" class="btn btn-success">
             <i class="bi bi-plus-lg"></i> Upload Scholar
         </a>
     </div>

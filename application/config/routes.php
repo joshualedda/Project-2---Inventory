@@ -13,14 +13,18 @@ $route['about'] = 'Welcome/about';
 $route['admin/students'] = 'Student';
 $route['admin/student/create'] = 'Student/create';
 $route['admin/student/store'] = 'Student/store';
-
-$route['admin/student/edit'] = 'Student/edit';
-$route['admin/student/view'] = 'Student/view';
+$route['admin/student/edit/(:num)'] = 'Student/edit/$1';
+$route['admin/student/update/(:num)'] = 'Student/update/$1';
+$route['admin/student/view/(:num)'] = 'Student/view/$1';
 
 // Scholarship
 $route['admin/scholarships'] = 'Scholarship';
-$route['admin/scholar/create'] = 'Scholarship/create';
-$route['admin/scholar/view'] = 'Files/view';
+$route['admin/scholarship/create'] = 'Scholarship/create';
+$route['admin/scholarship/store'] = 'Scholarship/store';
+$route['admin/scholarship/edit/(:num)'] = 'Scholarship/edit/$1';
+$route['admin/scholarship/update/(:num)'] = 'Scholarship/update/$1';
+$route['admin/scholarship/view/(:num)'] = 'Scholarship/view/$1';
+$route['admin/scholarship/get_student_details'] = 'Scholarship/get_student_details';
 
 // Guidance
 $route['admin/Guidance'] = 'Guidances';

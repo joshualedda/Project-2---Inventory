@@ -95,18 +95,26 @@
                                                 <td><?= $student->first_name ?></td>
                                                 <td><?= $student->last_name ?></td>
                                                 <td>
-                                                    <span class="badge bg-primary"><?= $student->course ?></span>
+                                                    <?php 
+                                                    $course_names = [1 => 'BSIT', 2 => 'BSBA', 3 => 'BSED'];
+                                                    $course_name = isset($course_names[$student->course]) ? $course_names[$student->course] : 'Unknown';
+                                                    ?>
+                                                    <span class="badge bg-primary"><?= $course_name ?></span>
                                                 </td>
                                                 <td><?= $student->year_level ?></td>
                                                 <td><?= $student->admission_date ?></td>
                                                 <td>
-                                                    <?php if ($student->status == 'Active'): ?>
+                                                    <?php if ($student->status == 0): ?>
                                                         <span class="badge rounded-pill bg-success">Active</span>
                                                     <?php else: ?>
                                                         <span class="badge rounded-pill bg-danger">Inactive</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
+                                                    <a href="<?= base_url('admin/student/edit/' . $student->id) ?>"
+                                                        class="btn btn-sm btn-primary">
+                                                        <i class="bi bi-pencil"></i> Edit
+                                                    </a>
                                                     <a href="<?= base_url('admin/student/print/' . $student->id) ?>"
                                                         class="btn btn-sm btn-secondary">
                                                         <i class="bi bi-printer"></i> Print
@@ -143,19 +151,31 @@
         // Course filter
         $('#courseFilter').on('change', function () {
             var course = $(this).val();
-            table.column(2).search(course).draw(); // Course column index = 2
+            if (course === '') {
+                table.column(2).search('').draw();
+            } else {
+                table.column(2).search('^' + course + '$', true, false).draw();
+            }
         });
 
         // Year Level filter
         $('#yearFilter').on('change', function () {
             var year = $(this).val();
-            table.column(3).search(year).draw(); // Year Level column index = 3
+            if (year === '') {
+                table.column(3).search('').draw();
+            } else {
+                table.column(3).search('^' + year + '$', true, false).draw();
+            }
         });
 
         // Status filter
         $('#statusFilter').on('change', function () {
             var status = $(this).val();
-            table.column(5).search(status).draw(); // Status column index = 5
+            if (status === '') {
+                table.column(5).search('').draw();
+            } else {
+                table.column(5).search('^' + status + '$', true, false).draw();
+            }
         });
 
         // Custom date range filter (Date Enrolled)

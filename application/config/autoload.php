@@ -134,4 +134,4 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 // Check for error here
-$autoload['model'] = array('User');
+$autoload['model'] = array('User', 'StudentModel', 'ScholarshipModel', 'ScholarshipEducationModel', 'ScholarshipSiblingsModel');
