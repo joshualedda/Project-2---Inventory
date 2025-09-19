@@ -66,25 +66,11 @@
         </li>
 
         <!-- Guidance -->
-        <li class="sidebar-item" id="sidebarItem">
-          <a class="sidebar-link sidebar-dropdown">
-            <i class="ti ti-compass"></i>
+           <li class="sidebar-item">
+          <a class="sidebar-link" href="<?= base_url('admin/Guidance'); ?>">
+                    <i class="ti ti-compass"></i>
             <span class="hide-menu">Guidance</span>
           </a>
-          <ul id="menu-nav" class="nav-content">
-            <li class="sidebar-item px-4">
-              <a class="sidebar-link" href="<?= base_url('admin/Guidance'); ?>">
-                <i class="ti ti-archive"></i>
-                <span class="hide-menu">Students Inventory</span>
-              </a>
-            </li>
-            <li class="sidebar-item px-4">
-              <a class="sidebar-link" href="#">
-                <i class="ti ti-messages"></i>
-                <span class="hide-menu">Counselling</span>
-              </a>
-            </li>
-          </ul>
         </li>
 
         <!-- Clinic -->
@@ -94,9 +80,6 @@
             <span class="hide-menu">Clinic</span>
           </a>
           <ul id="menu-nav" class="nav-content">
-           
-
-
 
             <li class="sidebar-item px-4">
               <a class="sidebar-link" href="<?= base_url('admin/clinic-patients'); ?>">

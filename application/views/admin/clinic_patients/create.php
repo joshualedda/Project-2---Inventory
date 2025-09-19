@@ -13,7 +13,7 @@
         </div>
 
         <div class="d-flex justify-content-end my-1">
-            <a href="<?= base_url('clinic/clinic-patients') ?>" class="btn btn-success">Back</a>
+            <a href="<?= base_url('admin/clinic-patients') ?>" class="btn btn-success">Back</a>
         </div>
 
         <div class="card">

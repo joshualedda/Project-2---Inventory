@@ -16,7 +16,7 @@
 
         <!-- Header with Back Button -->
         <div class="d-flex justify-content-end align-items-center mb-4">
-            <a href="<?= base_url('admin/student') ?>" class="btn btn-outline-secondary">
+            <a href="<?= base_url('admin/students') ?>" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i> Back to Students
             </a>
         </div>

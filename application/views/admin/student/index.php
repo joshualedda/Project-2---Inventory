@@ -95,23 +95,33 @@
                                                 <td><?= $student->first_name ?></td>
                                                 <td><?= $student->last_name ?></td>
                                                 <td>
-                                                    <span class="badge bg-primary"><?= $student->course_name ?? 'No Course' ?></span>
+                                                    <span
+                                                        class="badge bg-primary"><?= $student->course_name ?? 'No Course' ?></span>
                                                 </td>
                                                 <td><?= $student->year_level ?></td>
                                                 <td><?= $student->admission_date ?></td>
                                                 <td>
-                                                    <?php if ($student->status == 0): ?>
-                                                        <span class="badge rounded-pill bg-success">Active</span>
+                                                    <?php if ($student->status == 'Enrolled'): ?>
+                                                        <span class="badge bg-primary">Enrolled</span>
+                                                    <?php elseif ($student->status == 'Graduated'): ?>
+                                                        <span class="badge bg-success">Graduated</span>
+                                                    <?php elseif ($student->status == 'Undergraduate'): ?>
+                                                        <span class="badge bg-warning text-dark">Undergraduate</span>
+                                                    <?php elseif ($student->status == 'Dropped'): ?>
+                                                        <span class="badge bg-danger">Dropped</span>
                                                     <?php else: ?>
-                                                        <span class="badge rounded-pill bg-danger">Inactive</span>
+                                                        <span
+                                                            class="badge bg-secondary"><?= htmlspecialchars($student->status) ?></span>
                                                     <?php endif; ?>
                                                 </td>
+
+
                                                 <td>
                                                     <a href="<?= base_url('admin/student/edit/' . $student->id) ?>"
                                                         class="btn btn-sm btn-primary">
                                                         <i class="bi bi-pencil"></i> Edit
                                                     </a>
-                                                   
+
                                                     <a href="<?= base_url('admin/student/view/' . $student->id) ?>"
                                                         class="btn btn-sm btn-success">View</a>
                                                 </td>

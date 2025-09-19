@@ -13,10 +13,12 @@ class AlumniModel extends CI_Model
         $this->db->from('alumni a');
         $this->db->join('students s', 'a.student_id = s.id', 'left');
         $this->db->join('courses c', 's.course_id = c.id', 'left');
+        $this->db->where('s.status', 'Graduated'); // ✅ only graduated students
         $this->db->order_by('a.graduation_year', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
+
 
     public function get_by_id($id)
     {
@@ -82,7 +84,7 @@ class AlumniModel extends CI_Model
         $rows = $this->db->get()->result_array();
         $byStatus = array();
         foreach ($rows as $row) {
-            $byStatus[$row['status']] = (int)$row['count'];
+            $byStatus[$row['status']] = (int) $row['count'];
         }
         $stats['total_enrolled'] = $byStatus['Enrolled'] ?? 0;
         $stats['total_graduated'] = $byStatus['Graduated'] ?? 0;
@@ -92,5 +94,3 @@ class AlumniModel extends CI_Model
     }
 }
 ?>
-
-
