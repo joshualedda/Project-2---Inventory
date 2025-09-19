@@ -60,17 +60,7 @@
                         </div>
 
 
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Institution</label>
-
-                            <select name="institution_id" class="form-select" aria-label="Default select example">
-                                <option value="" selected>Open this select menu</option>
-                                <option value="1">NARTDI</option>
-                                <option value="2">SRDI</option>
-                            </select>
-                            <?= form_error('institution_id', '<div class="error text-danger">', '</div>') ?>
-
-                        </div>
+                        
 
                         <div class="col-md-6">
                             <label for="exampleInputEmail1" class="form-label">Department</label>

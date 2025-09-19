@@ -60,6 +60,13 @@
               <?= form_error('student_id', '<div class="error text-danger">', '</div>') ?>
             </div>
 
+            <!-- Contact -->
+            <div class="col-md-4">
+              <label for="contact" class="form-label">Contact</label>
+              <input type="text" class="form-control" name="contact" value="<?= set_value('contact') ?>" placeholder="09XXXXXXXXX">
+              <?= form_error('contact', '<div class="error text-danger">', '</div>') ?>
+            </div>
+
             <!-- Date of Birth -->
             <div class="col-md-4">
               <label for="date_of_birth" class="form-label">Date of Birth</label>

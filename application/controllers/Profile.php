@@ -1,9 +1,27 @@
 <?php
-class Profile extends CI_Controller
+class Profile extends MY_Controller
 {
+    private function loadLayoutPartials()
+    {
+        $office = $this->session->userdata('office');
+        $sidebar = 'partials/sidebar';
+        $navbar = 'partials/navbar';
+
+        if ($office === 'scholar') {
+            $sidebar = 'partials/scholar/sidebar';
+            $navbar = 'partials/scholar/navbar';
+        } elseif ($office === 'clinic') {
+            $sidebar = 'partials/clinic/sidebar';
+            $navbar = 'partials/clinic/navbar';
+        }
+
+        $this->load->view($sidebar);
+        $this->load->view($navbar);
+    }
+
     public function index()
     {
-        $this->redirectIfUnauthorized();
+        $this->auto_check_access();
         $this->prepareUserData();
 
         $user_id = $this->session->userdata('id');
@@ -12,8 +30,7 @@ class Profile extends CI_Controller
 
         // Load the views
         $this->load->view('partials/header');
-        $this->load->view('partials/sidebar');
-        $this->load->view('partials/navbar');
+        $this->loadLayoutPartials();
         $this->load->view('admin/profile/index', $data);
         $this->load->view('partials/footer');
     }
@@ -39,16 +56,14 @@ class Profile extends CI_Controller
         $this->data['role'] = $user_role;
     }
 
-
-    // Profile Updated
     public function editProfile($user_id)
     {
         // Set validation rules
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('employee_no', 'Employee No.', 'required');
+        $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
         $this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]'); // Optional password validation
+        $this->form_validation->set_rules('office', 'Office', 'required|in_list[admin,scholar]');
 
         if ($this->form_validation->run() === FALSE) {
             echo json_encode(['status' => 'error', 'message' => validation_errors()]);
@@ -60,7 +75,7 @@ class Profile extends CI_Controller
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'email' => $this->input->post('email'),
-            'employee_no' => $this->input->post('employee_no')
+            'office' => $this->input->post('office')
         );
 
         // Handle password update if provided

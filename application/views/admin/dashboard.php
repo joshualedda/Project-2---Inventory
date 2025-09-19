@@ -50,7 +50,7 @@
                     <i class='bx bxs-graduation display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>42 Programs</h6>
+                    <h6><?= $stats['total_programs'] ?? 0 ?> Programs</h6>
                     <span class="text-success small pt-1 fw-bold">+6%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -73,7 +73,7 @@
 
                   </div>
                   <div class="ps-3">
-                    <h6>30 Students</h6>
+                    <h6><?= $stats['total_students'] ?? 0 ?> Students</h6>
                     <span class="text-success small pt-1 fw-bold">+10%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -96,7 +96,7 @@
 
                   </div>
                   <div class="ps-3">
-                    <h6>15 Students</h6>
+                    <h6><?= $stats['students_by_course']['BSSC'] ?? 0 ?> Students</h6>
                     <span class="text-danger small pt-1 fw-bold">-2%</span>
                     <span class="text-muted small pt-2 ps-1">decrease</span>
                   </div>
@@ -118,7 +118,7 @@
                     <i class='bx bxs-bar-chart-alt-2 display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>25 Students</h6>
+                    <h6><?= $stats['students_by_course']['BSIC'] ?? 0 ?> Students</h6>
                     <span class="text-success small pt-1 fw-bold">+4%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -140,7 +140,7 @@
                     <i class='bx bxs-book-open display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>120 Students</h6>
+                    <h6><?= $stats['students_by_course']['BSHM'] ?? 0 ?> Students</h6>
                     <span class="text-success small pt-1 fw-bold">+8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -162,7 +162,7 @@
                     <i class='bx bxs-hotel display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>85 Students</h6>
+                    <h6><?= $stats['students_by_course']['HMT'] ?? 0 ?> Students</h6>
                     <span class="text-danger small pt-1 fw-bold">-3%</span>
                     <span class="text-muted small pt-2 ps-1">decrease</span>
                   </div>

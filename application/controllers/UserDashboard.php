@@ -1,12 +1,18 @@
 <?php
-class UserDashboard extends CI_Controller
+class UserDashboard extends MY_Controller
 {
     public function index()
     {
+        $this->check_admin_access();
+        $this->prepareUserData();
+        
+        // Get dashboard statistics
+        $data['stats'] = $this->DashboardModel->get_user_dashboard_stats();
+        
         $this->load->view('partials/header');
         $this->load->view('partials/user/sidebar');
         $this->load->view('partials/user/navbar');
-        $this->load->view('admin/dashboard');
+        $this->load->view('user/dashboard', $data);
         $this->load->view('partials/footer');
     }
 

@@ -60,6 +60,13 @@
               <?= form_error('student_id', '<div class="error text-danger">', '</div>') ?>
             </div>
 
+            <!-- Contact -->
+            <div class="col-md-4">
+              <label for="contact" class="form-label">Contact</label>
+              <input type="text" class="form-control" name="contact" value="<?= set_value('contact', $student->contact ?? '') ?>" placeholder="09XXXXXXXXX">
+              <?= form_error('contact', '<div class="error text-danger">', '</div>') ?>
+            </div>
+
             <!-- Date of Birth -->
             <div class="col-md-4">
               <label for="date_of_birth" class="form-label">Date of Birth</label>
@@ -80,14 +87,19 @@
 
             <!-- Course -->
             <div class="col-md-4">
-              <label for="course" class="form-label">Course</label>
-              <select name="course" class="form-select">
+              <label for="course_id" class="form-label">Course</label>
+              <select name="course_id" class="form-select">
                 <option value="">Select Course</option>
-                <option value="1" <?= set_select('course', '1', ($student->course == 1)) ?>>BSIT</option>
-                <option value="2" <?= set_select('course', '2', ($student->course == 2)) ?>>BSBA</option>
-                <option value="3" <?= set_select('course', '3', ($student->course == 3)) ?>>BSED</option>
+                <?php 
+                $courses = $this->CourseModel->get_courses_for_dropdown();
+                foreach ($courses as $course): 
+                ?>
+                <option value="<?= $course['id'] ?>" <?= set_select('course_id', $course['id'], ($student->course_id == $course['id'])) ?>>
+                    <?= $course['course'] ?>
+                </option>
+                <?php endforeach; ?>
               </select>
-              <?= form_error('course', '<div class="error text-danger">', '</div>') ?>
+              <?= form_error('course_id', '<div class="error text-danger">', '</div>') ?>
             </div>
 
             <!-- Year Level -->

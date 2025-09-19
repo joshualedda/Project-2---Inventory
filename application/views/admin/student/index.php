@@ -13,7 +13,7 @@
     </div>
 
     <div class="d-flex justify-content-end my-2">
-        <a href="<?= base_url('admin/student/create') ?>" class="btn btn-success">
+        <a href="<?= base_url('admin/student/create') ?>" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i> Upload Student
         </a>
     </div>
@@ -95,11 +95,7 @@
                                                 <td><?= $student->first_name ?></td>
                                                 <td><?= $student->last_name ?></td>
                                                 <td>
-                                                    <?php 
-                                                    $course_names = [1 => 'BSIT', 2 => 'BSBA', 3 => 'BSED'];
-                                                    $course_name = isset($course_names[$student->course]) ? $course_names[$student->course] : 'Unknown';
-                                                    ?>
-                                                    <span class="badge bg-primary"><?= $course_name ?></span>
+                                                    <span class="badge bg-primary"><?= $student->course_name ?? 'No Course' ?></span>
                                                 </td>
                                                 <td><?= $student->year_level ?></td>
                                                 <td><?= $student->admission_date ?></td>
@@ -115,10 +111,7 @@
                                                         class="btn btn-sm btn-primary">
                                                         <i class="bi bi-pencil"></i> Edit
                                                     </a>
-                                                    <a href="<?= base_url('admin/student/print/' . $student->id) ?>"
-                                                        class="btn btn-sm btn-secondary">
-                                                        <i class="bi bi-printer"></i> Print
-                                                    </a>
+                                                   
                                                     <a href="<?= base_url('admin/student/view/' . $student->id) ?>"
                                                         class="btn btn-sm btn-success">View</a>
                                                 </td>

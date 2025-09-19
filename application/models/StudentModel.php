@@ -16,7 +16,11 @@ class StudentModel extends CI_Model
     
         public function get_all_students()
     {
-        $query = $this->db->get('students');
+        $this->db->select('s.*, c.course as course_name');
+        $this->db->from('students s');
+        $this->db->join('courses c', 's.course_id = c.id', 'left');
+        $this->db->order_by('s.first_name', 'ASC');
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -28,7 +32,11 @@ class StudentModel extends CI_Model
      */
     public function get_student_by_id($id)
     {
-        $query = $this->db->get_where('students', array('id' => $id));
+        $this->db->select('s.*, c.course as course_name');
+        $this->db->from('students s');
+        $this->db->join('courses c', 's.course_id = c.id', 'left');
+        $this->db->where('s.id', $id);
+        $query = $this->db->get();
         return $query->row();
     }
 

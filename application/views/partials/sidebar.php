@@ -15,7 +15,7 @@
         </li>
 
         <li class="sidebar-item">
-          <a class="sidebar-link" href="<?= base_url('dashboard'); ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/dashboard'); ?>">
             <i class="ti ti-layout-dashboard"></i>
             <span class="hide-menu">Dashboard</span>
           </a>
@@ -28,6 +28,13 @@
           </a>
         </li>
 
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="<?= base_url('admin/courses'); ?>">
+            <i class="ti ti-certificate"></i>
+            <span class="hide-menu">Courses</span>
+          </a>
+        </li>
+
         <!-- Offices -->
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -37,14 +44,22 @@
         <!-- Scholarship -->
         <li class="sidebar-item" id="sidebarItem">
           <a class="sidebar-link sidebar-dropdown">
-            <i class="ti ti-award"></i>
+          <i class="ti ti-award"></i>
             <span class="hide-menu">Scholarships</span>
           </a>
           <ul id="menu-nav" class="nav-content">
-            <li class="sidebar-item px-4">
+           
+          <li class="sidebar-item px-4">
               <a class="sidebar-link" href="<?= base_url('admin/scholarships'); ?>">
-                <i class="ti ti-school"></i>
+              <i class="ti ti-users"></i>
                 <span class="hide-menu">Scholar Students</span>
+              </a>
+            </li>
+            
+          <li class="sidebar-item px-4">
+              <a class="sidebar-link" href="<?= base_url('admin/scholarshipprogram'); ?>">
+              <i class="ti ti-clipboard-list"></i>
+                <span class="hide-menu">Programs</span>
               </a>
             </li>
           </ul>
@@ -79,18 +94,14 @@
             <span class="hide-menu">Clinic</span>
           </a>
           <ul id="menu-nav" class="nav-content">
-            <li class="sidebar-item px-4">
-              <a class="sidebar-link" href="#">
-                <i class="ti ti-heartbeat"></i>
-                <span class="hide-menu">Medical Records</span>
-              </a>
-            </li>
+           
+
 
 
             <li class="sidebar-item px-4">
-              <a class="sidebar-link" href="#">
-                <i class="ti ti-stethoscope"></i>
-                <span class="hide-menu">Dental Records</span>
+              <a class="sidebar-link" href="<?= base_url('admin/clinic-patients'); ?>">
+             <i class="ti ti-heartbeat"></i>
+                <span class="hide-menu">Clinic Patients</span>
               </a>
             </li>
 
@@ -98,20 +109,13 @@
         </li>
 
         <!-- Alumni -->
-        <li class="sidebar-item" id="sidebarItem">
-          <a class="sidebar-link sidebar-dropdown">
-            <i class="ti ti-users"></i>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="<?= base_url('admin/alumni'); ?>">
+          <i class="ti ti-address-book"></i>
             <span class="hide-menu">Alumni</span>
           </a>
-          <ul id="menu-nav" class="nav-content">
-            <li class="sidebar-item px-4">
-              <a class="sidebar-link" href="#">
-                <i class="ti ti-address-book"></i>
-                <span class="hide-menu">Alumni Records</span>
-              </a>
-            </li>
-          </ul>
         </li>
+
 
         <!-- Sports -->
         <li class="sidebar-item">
@@ -155,7 +159,7 @@
         </li>
 
         <li class="sidebar-item">
-          <a class="sidebar-link" href="<?= base_url('users'); ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/users'); ?>">
             <i class="ti ti-users"></i>
             <span class="hide-menu">Manage Users</span>
           </a>

@@ -22,7 +22,9 @@ error_reporting(E_ALL);
 
 
         <div class="d-flex justify-content-end my-2">
-            <a href="<?= base_url('users') ?>" class="btn btn-success">Back</a>
+            <a href="<?= base_url('admin/users') ?>" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Users
+            </a>
         </div>
 
 
@@ -36,72 +38,99 @@ error_reporting(E_ALL);
 
 
 
-        <div class="card">
-            <h3 class="card-title mx-4 mt-4">
-                Edit User
-            </h3>
-
-            <div class="card-body">
-                <form action="<?= base_url('Users/update/' . $user['id']) ?>" method="POST">
-                    <div class="row g-3">
-
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">First Name</label>
-                            <input disabled name="first_name" type="text" class="form-control"
-                                value="<?= isset($user['first_name']) ? htmlspecialchars($user['first_name']) : set_value('first_name') ?>">
-                            <?= form_error('first_name', '<div class="error text-danger">', '</div>') ?>
-
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                            <input disabled name="last_name" type="text" class="form-control"
-                                value="<?= isset($user['last_name']) ? htmlspecialchars($user['last_name']) : set_value('last_name') ?>">
-                            <?= form_error('last_name', '<div class="error text-danger">', '</div>') ?>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Institution</label>
-                            <select disabled name="institution_id" class="form-select" aria-label="Default select example">
-                                <option value="" <?= empty($user['institution_id']) ? 'selected' : '' ?>>Open this select menu</option>
-                                <option value="1" <?= isset($user['institution_id']) && $user['institution_id'] == 1 ? 'selected' : '' ?>>NARTDI</option>
-                                <option value="2" <?= isset($user['institution_id']) && $user['institution_id'] == 2 ? 'selected' : '' ?>>SRDI</option>
-                            </select>
-                            <?= form_error('institution_id', '<div class="error text-danger">', '</div>') ?>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Department</label>
-                            <select disabled name="department_id" class="form-select" aria-label="Default select example">
-                                <option value="" <?= empty($user['department_id']) ? 'selected' : '' ?>>Open this select menu</option>
-                                <option value="1" <?= isset($user['department_id']) && $user['department_id'] == 1 ? 'selected' : '' ?>>Research</option>
-                                <option value="2" <?= isset($user['department_id']) && $user['department_id'] == 2 ? 'selected' : '' ?>>Extension</option>
-                            </select>
-                            <?= form_error('department_id', '<div class="error text-danger">', '</div>') ?>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Email</label>
-                            <input disabled name="email" type="text" class="form-control" value="<?= isset($user['email']) ? htmlspecialchars($user['email']) : set_value('email') ?>">
-                            <?= form_error('email', '<div class="error text-danger">', '</div>') ?>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Employee No.</label>
-                            <input disabled name="employee_no" type="number" class="form-control"
-                                value="<?= isset($user['employee_no']) ? htmlspecialchars($user['employee_no']) : set_value('employee_no') ?>">
-                            <?= form_error('employee_no', '<div class="error text-danger">', '</div>') ?>
-
-                        </div>
-
-
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="card-title mb-0 text-dark">User Information</h5>
                     </div>
-                </form>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h3 class="text-primary mb-2"><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h3>
+                            <p class="text-muted mb-0">User Profile</p>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-hash text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">User ID</small>
+                                        <span class="fw-semibold">#<?= $user['id'] ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">Full Name</small>
+                                        <span class="fw-semibold"><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-envelope text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">Email</small>
+                                        <span class="fw-semibold"><?= htmlspecialchars($user['email']) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-shield-lock text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">Role</small>
+                                        <span class="badge bg-info"><?= (int)$user['role_id'] === 1 ? 'Admin' : 'User' ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-building text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">Office</small>
+                                        <span class="fw-semibold text-uppercase"><?= htmlspecialchars($user['office']) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-circle-fill text-muted me-2"></i>
+                                    <div>
+                                        <small class="text-muted d-block">Status</small>
+                                        <?php if ((int)$user['status'] === 0): ?>
+                                            <span class="badge bg-success">Active</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Inactive</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white border-bottom">
+                        <h6 class="card-title mb-0 text-dark">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="<?= base_url('admin/users/edit/' . $user['id']) ?>" class="btn btn-warning">
+                                <i class="bi bi-pencil me-2"></i>Edit User
+                            </a>
+                            <a href="<?= base_url('admin/users') ?>" class="btn btn-outline-secondary">
+                                <i class="bi bi-list me-2"></i>All Users
+                            </a>
+                            <a href="<?= base_url('admin/users/create') ?>" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>New User
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

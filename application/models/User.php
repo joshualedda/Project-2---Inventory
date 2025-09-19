@@ -11,8 +11,9 @@ class User extends CI_Model
     // Get all users
     public function getUsers()
     {
-        $this->db->select('users.id, users.first_name, users.last_name, users.status');
+        $this->db->select('id, first_name, last_name, email, role_id, office, status, created_at');
         $this->db->from('users');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -54,7 +55,6 @@ class User extends CI_Model
     // Get User by id and for profile purposes
     public function getUserById($id)
     {
-        // Use Query Builder to get user by ID
         $this->db->where('id', $id);
         $query = $this->db->get('users');
 
@@ -69,14 +69,14 @@ class User extends CI_Model
 
     public function updateProfile($user_id, $data)
     {
-        // Check if employee_no is unique
-        if (isset($data['employee_no'])) {
-            $this->db->where('employee_no', $data['employee_no']);
+        // Check if email is unique (excluding current user)
+        if (isset($data['email'])) {
+            $this->db->where('email', $data['email']);
             $this->db->where('id !=', $user_id); // Ensure the check is not for the current user
             $query = $this->db->get('users');
 
             if ($query->num_rows() > 0) {
-                return ['status' => 'error', 'message' => 'Employee Number already exists.'];
+                return ['status' => 'error', 'message' => 'Email already exists.'];
             }
         }
 
@@ -88,6 +88,6 @@ class User extends CI_Model
     public function updateUser($id, $data)
     {
         $this->db->where('id', $id);
-        return $this->db->update('users', $data);  // Ensure the table name is correct
+        return $this->db->update('users', $data);
     }
 }

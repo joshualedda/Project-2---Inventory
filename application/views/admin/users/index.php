@@ -44,35 +44,34 @@
 
 
               <div class="table-responsive">
-                <table
-                  id="datatable"
-                  class="table table-striped data-table"
-                  style="width: 100%">
+                <table id="datatable" class="table table-striped data-table" style="width: 100%">
                   <thead>
                     <tr>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>Department</th>
+                      <th>Office</th>
                       <th>Status</th>
                       <th>Manage</th>
                     </tr>
                   </thead>
-                  <?php foreach ($users as $user) : ?>
+                  <?php foreach ($users as $user): ?>
                     <tr>
                       <td><?= htmlspecialchars($user['first_name']) ?></td>
                       <td><?= htmlspecialchars($user['last_name']) ?></td>
 
-                      <td> <?= $user['department_id'] == 1 ? 'Research' : ($user['department_id'] == 2 ? 'Extension' : 'Unknown') ?></td>
+                      <td> <?= $user['office'] ?></td>
 
                       <td>
-                        <span class="badge rounded-pill <?= $user['status'] == 0 ? 'bg-success' : ($user['status'] == 1 ? 'bg-danger' : 'bg-secondary') ?>">
+                        <span
+                          class="badge rounded-pill <?= $user['status'] == 0 ? 'bg-success' : ($user['status'] == 1 ? 'bg-danger' : 'bg-secondary') ?>">
                           <?= $user['status'] == 0 ? 'Active' : ($user['status'] == 1 ? 'Inactive' : 'Unknown') ?>
                         </span>
                       </td>
 
                       <td>
-                        <a href="<?= base_url('user/view/' . $user['id']) ?>" class="btn btn-sm btn-success">View</a>
-                        <a href="<?= base_url('user/edit/' . $user['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="<?= base_url('admin/user/view/' . $user['id']) ?>"
+                          class="btn btn-sm btn-success">View</a>
+                        <a href="<?= base_url('admin/edit/' . $user['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
                       </td>
                     </tr>
                   <?php endforeach; ?>

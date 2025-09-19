@@ -19,7 +19,7 @@
             <i class='bx bxs-network-chart display-6'></i>
           </div>
           <div class="ps-3">
-            <h6>42 Projects</h6>
+            <h6><?= $stats['extension_projects'] ?? 0 ?> Projects</h6>
             <span class="text-success small pt-1 fw-bold">+6%</span>
             <span class="text-muted small pt-2 ps-1">increase</span>
           </div>
@@ -42,7 +42,7 @@
             <i class='bx bxs-flask display-6'></i>
           </div>
           <div class="ps-3">
-            <h6>30 Studies</h6>
+            <h6><?= $stats['research_studies'] ?? 0 ?> Studies</h6>
             <span class="text-success small pt-1 fw-bold">+10%</span>
             <span class="text-muted small pt-2 ps-1">increase</span>
           </div>
@@ -65,7 +65,7 @@
             <i class='bx bxs-check-shield display-6'></i>
           </div>
           <div class="ps-3">
-            <h6>15 Audits</h6>
+            <h6><?= $stats['aqa_checks'] ?? 0 ?> Audits</h6>
             <span class="text-danger small pt-1 fw-bold">-2%</span>
             <span class="text-muted small pt-2 ps-1">decrease</span>
           </div>
@@ -88,7 +88,7 @@
             <i class='bx bxs-pie-chart-alt-2 display-6'></i>
           </div>
           <div class="ps-3">
-            <h6>25 Plans</h6>
+            <h6><?= $stats['planning_strategies'] ?? 0 ?> Plans</h6>
             <span class="text-success small pt-1 fw-bold">+4%</span>
             <span class="text-muted small pt-2 ps-1">increase</span>
           </div>
@@ -115,7 +115,7 @@
                     <i class='bx bxs-folder display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>120 Items</h6>
+                    <h6><?= $stats['fo1_inventory'] ?? 0 ?> Items</h6>
                     <span class="text-success small pt-1 fw-bold">+8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -138,7 +138,7 @@
                     <i class='bx bxs-file-archive display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>85 Items</h6>
+                    <h6><?= $stats['fo2_inventory'] ?? 0 ?> Items</h6>
                     <span class="text-danger small pt-1 fw-bold">-3%</span>
                     <span class="text-muted small pt-2 ps-1">decrease</span>
                   </div>
@@ -161,7 +161,7 @@
                     <i class='bx bxs-book-content display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>95 Items</h6>
+                    <h6><?= $stats['fo3_inventory'] ?? 0 ?> Items</h6>
                     <span class="text-success small pt-1 fw-bold">+5%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>
@@ -184,7 +184,7 @@
                     <i class='bx bxs-archive display-6'></i>
                   </div>
                   <div class="ps-3">
-                    <h6>110 Items</h6>
+                    <h6><?= $stats['fo4_inventory'] ?? 0 ?> Items</h6>
                     <span class="text-success small pt-1 fw-bold">+12%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span>
                   </div>

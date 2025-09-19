@@ -21,7 +21,13 @@ class ScholarshipModel extends CI_Model
      */
     public function get_all_scholarships()
     {
-        $query = $this->db->get('scholarships');
+        $this->db->select('sch.*, st.first_name, st.middle_name, st.last_name, st.year_level, c.course as course_name, sp.scholarship_name');
+        $this->db->from('scholarships sch');
+        $this->db->join('students st', 'sch.student_id = st.student_id', 'left');
+        $this->db->join('courses c', 'st.course_id = c.id', 'left');
+        $this->db->join('scholarship_programs sp', 'sch.scholarship_id = sp.id', 'left');
+        $this->db->order_by('sch.created_at', 'DESC');
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -160,10 +166,12 @@ class ScholarshipModel extends CI_Model
      */
     public function get_students_for_dropdown()
     {
-        $this->db->select('id, student_id, first_name, middle_name, last_name, course, year_level');
-        $this->db->where('status', 0); // Only active students
-        $this->db->order_by('last_name', 'ASC');
-        $query = $this->db->get('students');
+        $this->db->select('s.id, s.student_id, s.first_name, s.middle_name, s.last_name, s.course_id, s.year_level, c.course as course_name');
+        $this->db->from('students s');
+        $this->db->join('courses c', 's.course_id = c.id', 'left');
+        $this->db->where('s.status', 0); // Only active students
+        $this->db->order_by('s.last_name', 'ASC');
+        $query = $this->db->get();
         return $query->result();
     }
 

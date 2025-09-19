@@ -1,12 +1,18 @@
 <?php
-class Dashboard extends CI_Controller
+class Dashboard extends MY_Controller
 {
     public function index()
     {
+        $this->check_admin_access();
+        $this->prepareUserData();
+        
+        // Get dashboard statistics
+        $data['stats'] = $this->DashboardModel->get_admin_dashboard_stats();
+        
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
         $this->load->view('partials/navbar');
-        $this->load->view('admin/dashboard');
+        $this->load->view('admin/dashboard', $data);
         $this->load->view('partials/footer');
     }
 

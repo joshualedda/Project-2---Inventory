@@ -1,6 +1,6 @@
 <?php
 
-class Users extends CI_Controller
+class Users extends MY_Controller
 {
     private function redirectIfUnauthorized()
     {
@@ -23,7 +23,7 @@ class Users extends CI_Controller
 
     public function index()
     {
-        $this->redirectIfUnauthorized();
+        $this->check_admin_access();
         $this->prepareUserData();
 
         $data['users'] = $this->User->getUsers();
@@ -38,7 +38,7 @@ class Users extends CI_Controller
 
     public function create()
     {
-        $this->redirectIfUnauthorized();
+        $this->check_admin_access();
         $this->prepareUserData();
 
         $this->load->view('partials/header');
@@ -50,13 +50,15 @@ class Users extends CI_Controller
 
     public function createUser()
     {
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
+        $this->check_admin_access();
+        $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('employee_no', 'Employee No.', 'required|numeric|min_length[5]|is_unique[users.employee_no]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
-        $this->form_validation->set_rules('institution_id', 'Institution', 'required');
-        $this->form_validation->set_rules('department_id', 'Department', 'required');
+        $this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'required|matches[password]');
+        $this->form_validation->set_rules('role_id', 'Role', 'required|in_list[0,1]');
+        $this->form_validation->set_rules('office', 'Office', 'required|in_list[admin,scholar,clinic,alumni,sbo,gad,time,marshall]');
+        $this->form_validation->set_rules('status', 'Status', 'required|in_list[0,1]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->create();
@@ -65,20 +67,20 @@ class Users extends CI_Controller
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'email' => $this->input->post('email'),
-                'employee_no' => $this->input->post('employee_no'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-                'institution_id' => $this->input->post('institution_id'),
-                'department_id' => $this->input->post('department_id')
+                'role_id' => (int)$this->input->post('role_id'),
+                'office' => $this->input->post('office'),
+                'status' => (int)$this->input->post('status'),
             );
 
             $insert = $this->User->insert_user($data);
 
             if ($insert) {
-                $this->session->set_flashdata('success', 'Registration Successfull.');
-                redirect($_SERVER['HTTP_REFERER']);
+                $this->session->set_flashdata('success', 'User created successfully.');
+                redirect(base_url('admin/users'));
             } else {
-                $this->session->set_flashdata('error', 'Registration failed. Please try again.');
-                redirect($_SERVER['HTTP_REFERER']);
+                $this->session->set_flashdata('error', 'Creation failed. Please try again.');
+                redirect(base_url('admin/user/create'));
             }
         }
     }
@@ -103,13 +105,13 @@ class Users extends CI_Controller
     // Update Users
     public function update($id)
     {
-        // Set validation rules
+        $this->check_admin_access();
         $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
-        $this->form_validation->set_rules('institution_id', 'Institution', 'required');
-        $this->form_validation->set_rules('department_id', 'Department', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-        $this->form_validation->set_rules('employee_no', 'Employee No.', 'required|integer|trim');
+        $this->form_validation->set_rules('role_id', 'Role', 'required|in_list[0,1]');
+        $this->form_validation->set_rules('office', 'Office', 'required|in_list[admin,scholar,clinic,alumni,sbo,gad,time,marshall]');
+        $this->form_validation->set_rules('status', 'Status', 'required|in_list[0,1]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->edit($id);  // Make sure edit() method loads the form correctly
@@ -117,15 +119,21 @@ class Users extends CI_Controller
             $data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
-                'institution_id' => $this->input->post('institution_id'),
-                'department_id' => $this->input->post('department_id'),
                 'email' => $this->input->post('email'),
-                'employee_no' => $this->input->post('employee_no'),
+                'role_id' => (int)$this->input->post('role_id'),
+                'office' => $this->input->post('office'),
+                'status' => (int)$this->input->post('status'),
             );
 
             // Update password if it was entered
             if (!empty($this->input->post('password'))) {
-                $data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+                $this->form_validation->set_rules('password', 'Password', 'min_length[8]');
+                $this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'matches[password]');
+                if ($this->form_validation->run() === FALSE) {
+                    $this->edit($id);
+                    return;
+                }
+                $data['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
             }
 
             $updateResult = $this->User->updateUser($id, $data);
@@ -137,7 +145,7 @@ class Users extends CI_Controller
                 $this->session->set_flashdata('error', 'Something went wrong. Please try again.');
             }
 
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect(base_url('admin/users'));
         }
     }
 

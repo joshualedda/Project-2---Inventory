@@ -31,6 +31,9 @@
   <script src="<?= base_url('assets/js/dataTables.bootstrap5.min.js') ?>"></script>
   <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 
+  <!-- Toast Notifications -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
   <!-- forms JQUERY -->
   <script src="<?= base_url('assets/js/forms/refferences.js ') ?>"></script>

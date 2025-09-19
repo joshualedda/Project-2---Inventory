@@ -18,14 +18,25 @@
         </a>
     </div>
 
+    <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
+        <?php endif; ?>
+
     <!-- My Scholarships Section -->
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+
+                 <div class="card-header">
+                <h5 class="card-title mb-0">Scholar Students</h5>
+            </div>
                     <div class="card-body">
 
-                        <h5 class="card-title mb-2">Scholar Students</h5>
+                      
 
                         <div class="table-responsive mb-3">
                             <!-- Filters -->
@@ -81,55 +92,53 @@
                                         <th>Student Name</th>
                                         <th>Course</th>
                                         <th>Year Level</th>
-                                        <th>Scholarship Type</th>
-                                        <th>Date Awarded</th>
+                                        <th>Program</th>
+                                        <th>Application</th>
+                                        <th>Created</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Row 1 -->
-                                    <tr>
-                                        <td>Juan Dela Cruz</td>
-                                        <td>BSIT</td>
-                                        <td>2nd Year</td>
-                                        <td>Academic</td>
-                                        <td>2025-08-15</td>
-                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <!-- Row 2 -->
-                                    <tr>
-                                        <td>Maria Santos</td>
-                                        <td>BSBA</td>
-                                        <td>3rd Year</td>
-                                        <td>Athletic</td>
-                                        <td>2025-07-10</td>
-                                        <td><span class="badge rounded-pill bg-danger">Inactive</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <!-- Row 3 -->
-                                    <tr>
-                                        <td>Ana Lopez</td>
-                                        <td>BSED</td>
-                                        <td>1st Year</td>
-                                        <td>Financial Aid</td>
-                                        <td>2025-09-01</td>
-                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-success">View</a>
-                                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <?php if (!empty($scholarships)): ?>
+                                        <?php foreach ($scholarships as $s): ?>
+                                            <tr>
+                                                <td>
+                                                    <?php 
+                                                        $name = trim(($s->last_name ?? '') . ', ' . ($s->first_name ?? '') . ' ' . ($s->middle_name ?? '')); 
+                                                        echo htmlspecialchars($name ?: $s->student_id);
+                                                    ?>
+                                                </td>
+                                                <td><?= htmlspecialchars($s->course_name ?? 'N/A') ?></td>
+                                                <td><?= htmlspecialchars($s->year_level ?? 'N/A') ?></td>
+                                                <td><?= htmlspecialchars($s->scholarship_name ?? 'N/A') ?></td>
+                                                <td><span class="badge bg-secondary"><?= htmlspecialchars($s->application_type) ?></span></td>
+                                                <td><?= htmlspecialchars(isset($s->created_at) ? $s->created_at : '') ?></td>
+                                                <td>
+                                                    <?php if (($s->application_status ?? 'Pending') === 'Approved'): ?>
+                                                        <span class="badge bg-success">Approved</span>
+                                                    <?php elseif (($s->application_status ?? 'Pending') === 'Rejected'): ?>
+                                                        <span class="badge bg-danger">Rejected</span>
+                                                    <?php elseif (($s->application_status ?? 'Pending') === 'Under Review'): ?>
+                                                        <span class="badge bg-warning text-dark">Under Review</span>
+                                                    <?php elseif (($s->application_status ?? 'Pending') === 'On Hold'): ?>
+                                                        <span class="badge bg-info text-dark">On Hold</span>
+                                                    <?php else: ?>
+                                                        <span class="badge bg-secondary">Pending</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= base_url('admin/scholarship/view/' . $s->id) ?>" class="btn btn-sm btn-success">View</a>
+                                                    <a href="<?= base_url('admin/scholarship/edit/' . $s->id) ?>" class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="<?= base_url('admin/scholarship/delete/' . $s->id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this application?');">Delete</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="8" class="text-center">No scholarship applications found.</td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -145,8 +154,8 @@
         $(document).ready(function() {
             var table = $('#scholarTable').DataTable({
                 order: [
-                    [4, "desc"]
-                ] // Sort by Date Awarded
+                    [5, "desc"]
+                ] // Sort by Created column
             });
 
             // Scholarship Type filter

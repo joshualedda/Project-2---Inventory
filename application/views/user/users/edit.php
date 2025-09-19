@@ -63,15 +63,7 @@ error_reporting(E_ALL);
                         </div>
 
 
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1" class="form-label">Institution</label>
-                            <select name="institution_id" class="form-select" aria-label="Default select example">
-                                <option value="" <?= empty($user['institution_id']) ? 'selected' : '' ?>>Open this select menu</option>
-                                <option value="1" <?= isset($user['institution_id']) && $user['institution_id'] == 1 ? 'selected' : '' ?>>NARTDI</option>
-                                <option value="2" <?= isset($user['institution_id']) && $user['institution_id'] == 2 ? 'selected' : '' ?>>SRDI</option>
-                            </select>
-                            <?= form_error('institution_id', '<div class="error text-danger">', '</div>') ?>
-                        </div>
+                        
 
 
                         <div class="col-md-6">

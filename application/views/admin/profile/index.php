@@ -32,7 +32,7 @@ $departments = [
                         <div class="card-body text-center">
                             <h5 class="my-3"><?= $user['first_name'] . ' ' . $user['last_name']; ?></h5>
                             <p class="text-muted mb-1">
-                                <?= ($user['institution_id'] == 1) ? 'NARTDI' : (($user['institution_id'] == 2) ? 'SRDI' : 'Unknown'); ?>
+                                <?= ucfirst($user['office'] ?? 'Unknown'); ?>
                             </p>
 
                         </div>
@@ -107,7 +107,7 @@ $departments = [
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">DMMMSU Email</p>
+                                    <p class="mb-0">Email</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0" id="userEmail"><?= $user['email']; ?></p>
@@ -116,35 +116,33 @@ $departments = [
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Employee No.</p>
+                                    <p class="mb-0">Role</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0" id="userEmail"><?= $user['employee_no']; ?></p>
+                                    <p class="text-muted mb-0"><?= ($user['role_id'] == 1) ? 'Admin' : 'User'; ?></p>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Institution</p>
+                                    <p class="mb-0">Office</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0">
-                                        <?= ($user['institution_id'] == 1) ? 'NARTDI' : (($user['institution_id'] == 2) ? 'SRDI' : 'Unknown'); ?>
+                                        <?= ucfirst($user['office'] ?? 'Unknown'); ?>
                                     </p>
-
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Department</p>
+                                    <p class="mb-0">Status</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0">
-                                        <?= ($user['department_id'] == 1) ? 'Research' : (($user['department_id'] == 2) ? 'Extension' : 'Unknown'); ?>
+                                        <?= ($user['status'] == 1) ? 'Active' : 'Inactive'; ?>
                                     </p>
                                 </div>
-
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-success" id="editButton" type="button">Edit</button>
@@ -177,7 +175,7 @@ $departments = [
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">DMMMSU Email</p>
+                                        <p class="mb-0">Email</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <input type="email" name="email" class="form-control" value="<?= $user['email']; ?>">
@@ -186,10 +184,13 @@ $departments = [
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">Employee No.</p>
+                                        <p class="mb-0">Office</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="number" name="employee_no" class="form-control" value="<?= $user['employee_no']; ?>">
+                                        <select name="office" class="form-control">
+                                            <option value="admin" <?= ($user['office'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                            <option value="scholar" <?= ($user['office'] == 'scholar') ? 'selected' : ''; ?>>Scholar</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <hr>
@@ -208,22 +209,22 @@ $departments = [
 
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">Institution</p>
+                                        <p class="mb-0">Role</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">
-                                            <?= $institutions[$user['institution_id']] ?? 'Unknown'; ?>
+                                            <?= ($user['role_id'] == 1) ? 'Admin' : 'User'; ?>
                                         </p>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">Department</p>
+                                        <p class="mb-0">Status</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">
-                                            <?= $departments[$user['department_id']] ?? 'Unknown'; ?>
+                                            <?= ($user['status'] == 1) ? 'Active' : 'Inactive'; ?>
                                         </p>
                                     </div>
                                 </div>

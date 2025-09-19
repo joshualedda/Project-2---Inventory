@@ -1,5 +1,5 @@
 <?php
-class Student extends CI_Controller
+class Student extends MY_Controller
 {
  
     private function redirectIfUnauthorized()
@@ -21,7 +21,7 @@ class Student extends CI_Controller
     }
     public function index()
     {
-        $this->redirectIfUnauthorized();
+        $this->check_admin_access();
         $this->prepareUserData();
 
            $data['students'] = $this->StudentModel->get_all_students();
@@ -35,7 +35,7 @@ class Student extends CI_Controller
 
     public function create()
     {
-        $this->redirectIfUnauthorized();
+        $this->check_admin_access();
         $this->prepareUserData();
 
         $this->load->view('partials/header');
@@ -51,9 +51,10 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('middle_name', 'Middle Name', 'trim');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
         $this->form_validation->set_rules('student_id', 'Student ID', 'required|trim');
+        $this->form_validation->set_rules('contact', 'Contact', 'trim');
         $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'required');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
-        $this->form_validation->set_rules('course', 'Course', 'required');
+        $this->form_validation->set_rules('course_id', 'Course', 'required');
         $this->form_validation->set_rules('year_level', 'Year Level', 'required');
         $this->form_validation->set_rules('section', 'Section', 'required');
         $this->form_validation->set_rules('school_year', 'School Year', 'required');
@@ -109,7 +110,7 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('student_id', 'Student ID', 'required|trim');
         $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'required');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
-        $this->form_validation->set_rules('course', 'Course', 'required');
+        $this->form_validation->set_rules('course_id', 'Course', 'required');
         $this->form_validation->set_rules('year_level', 'Year Level', 'required');
         $this->form_validation->set_rules('section', 'Section', 'required');
         $this->form_validation->set_rules('school_year', 'School Year', 'required');
@@ -130,8 +131,9 @@ class Student extends CI_Controller
                 'last_name' => $this->input->post('last_name'),
                 'student_id' => $this->input->post('student_id'),
                 'date_of_birth' => $this->input->post('date_of_birth'),
+                'contact' => $this->input->post('contact'),
                 'gender' => $this->input->post('gender'),
-                'course' => $this->input->post('course'),
+                'course_id' => $this->input->post('course_id'),
                 'year_level' => $this->input->post('year_level'),
                 'section' => $this->input->post('section'),
                 'school_year' => $this->input->post('school_year'),
@@ -158,16 +160,28 @@ class Student extends CI_Controller
     }
 
     // View
-    public function view()
+    public function view($id)
     {
         $this->redirectIfUnauthorized();
         $this->prepareUserData();
 
+        // Load the student model
+        $this->load->model('StudentModel');
+        
+        // Get student data
+        $student = $this->StudentModel->get_student_by_id($id);
+        
+        if (!$student) {
+            $this->session->set_flashdata('error', 'Student not found.');
+            redirect('admin/student');
+        }
+
+        $data['student'] = $student;
 
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
         $this->load->view('partials/navbar');
-        $this->load->view('admin/student/view');
+        $this->load->view('admin/student/view', $data);
         $this->load->view('partials/footer');
     }
 }

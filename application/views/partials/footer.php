@@ -26,6 +26,52 @@
 <!-- Forms -->
 <script src="<?= base_url('assets/js/forms.js') ?>"></script>
 
+<!-- Toast Notifications Script -->
+<script>
+$(document).ready(function() {
+    // Configure toastr
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    // Check for flash data and show toast
+    <?php if ($this->session->flashdata('toast_message')): ?>
+        var message = '<?= $this->session->flashdata('toast_message') ?>';
+        var type = '<?= $this->session->flashdata('toast_type') ?: 'info' ?>';
+        
+        switch(type) {
+            case 'success':
+                toastr.success(message);
+                break;
+            case 'error':
+                toastr.error(message);
+                break;
+            case 'warning':
+                toastr.warning(message);
+                break;
+            case 'info':
+            default:
+                toastr.info(message);
+                break;
+        }
+    <?php endif; ?>
+});
+</script>
+
 </body>
 
 </html>

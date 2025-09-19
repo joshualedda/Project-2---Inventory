@@ -30,15 +30,18 @@ class Login extends CI_Controller
             $user_data = array(
                 'id' => $user['id'],
                 'role_id' => $user['role_id'],
-                'logged_in' => true
+                'logged_in' => true,
+                'office' => $user['office']
             );
 
             $this->session->set_userdata($user_data);
 
-            if ($user['role_id'] == 0) {
-                redirect('user/dashboard'); // Redirect user to their dashboard
-            } elseif ($user['role_id'] == 1) {
-                redirect('dashboard'); // Redirect admin to admin dashboard
+            if ($user['office'] == "admin") {
+                redirect('admin/dashboard'); 
+            } elseif ($user['office'] == "scholar") {
+                redirect('scholar/dashboard'); 
+            } elseif ($user['office'] == "clinic") {
+                redirect('clinic/dashboard'); 
             }
         } else {
             $data['error_message'] = $result['error'];

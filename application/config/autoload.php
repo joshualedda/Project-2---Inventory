@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'form', 'url', 'text');
+$autoload['helper'] = array('url', 'form', 'url', 'text', 'security');
 
 
 /*
@@ -134,4 +134,4 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 // Check for error here
-$autoload['model'] = array('User', 'StudentModel', 'ScholarshipModel', 'ScholarshipEducationModel', 'ScholarshipSiblingsModel');
+$autoload['model'] = array('User', 'StudentModel', 'ScholarshipModel', 'ScholarshipEducationModel', 'ScholarshipSiblingsModel', 'ScholarshipProgramModel', 'DashboardModel', 'CourseModel', 'ClinicPatientModel', 'AlumniModel');

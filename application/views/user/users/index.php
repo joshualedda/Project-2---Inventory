@@ -52,7 +52,7 @@
                     <tr>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>Department</th>
+                      <th>Office</th>
                       <th>Status</th>
                       <th>Manage</th>
                     </tr>
@@ -62,7 +62,7 @@
                       <td><?= htmlspecialchars($user['first_name']) ?></td>
                       <td><?= htmlspecialchars($user['last_name']) ?></td>
 
-                      <td> <?= $user['department_id'] == 1 ? 'Research' : ($user['department_id'] == 2 ? 'Extension' : 'Unknown') ?></td>
+                      <td> <?= $user['office'] ?></td>
 
                       <td>
                         <span class="badge rounded-pill <?= $user['status'] == 0 ? 'bg-success' : ($user['status'] == 1 ? 'bg-danger' : 'bg-secondary') ?>">
